@@ -1,0 +1,39 @@
+<html>
+<head>
+    <title>Bing Translator Test</Title>
+    <script type="text/javascript" src="libs/jquery.js"></script>
+    <script type="text/javascript" src="js/recognizer.js"></script>
+    <style>
+        textarea {
+            width: 200px;
+            height: 100px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <textarea id="englishText">What time is it now?</textarea>
+    <textarea id="germanText"></textarea>
+    <input type="button" value="en2ar" onclick="translate1();"/>
+    <script type="text/javascript">
+        function translate1() {
+            var url = '/api/translate?from=en&to=de&text=' + $('#englishText')[0].value;
+            $.ajax({
+                url: url,
+                contentType: 'application/json; charset=UTF-8',
+                //dataType: 'json',
+                success: function(resp) {
+                    $('#germanText').text(/*resp.original + ' == ' + */resp.translated);
+                    //SpeechAPI.speak('de-DE', resp.translated);
+                }
+            });
+        }
+    </script>
+    
+    <script type="text/javascript">
+        $(function(){
+            SpeechAPI.startRecognition($('#englishText')[0]);
+        });
+    </script>
+</body>
+</html>
